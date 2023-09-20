@@ -34,10 +34,14 @@ class Game():
         self.eventLoop()
 
         self.Tick()
-        if(self.Draw()):
-            return True
+        value = self.Draw()
+        if value == "DEAD":
+            return "DEAD"
+        elif value == "WIN":
+            return "WIN"
+        
         pygame.display.update()
-        return False
+        return ""
 
     def eventLoop(self):
         # the main event loop, detects keypresses
@@ -80,9 +84,14 @@ class Game():
         for l in self.maploader.layers[::-1]:
             self.screen.blit(l.image, self.camera.apply_layer(l))
 
-        if(self.player.update(self.ttime / 1000.)):
+        value = self.player.update(self.ttime / 1000.)
+        if value == "DEAD":
             print("DEAD MAN ! ")
-            return True
+            return "DEAD"
+        elif value == "WIN":
+            print("WIN")
+            return "WIN"
+        
         self.camera.update(self.player)
 
         for e in self.entities:  # update blocks etc.
@@ -92,7 +101,7 @@ class Game():
         score_text = self.font.render(str(self.counter), True, (255, 255, 255))
         self.screen.blit(score_text, (10, 10))
 
-        return False
+        return ""
 
     def Play(self):
         pygame.time.set_timer(USEREVENT, 1000)
@@ -100,6 +109,7 @@ class Game():
 
         self.entities = pygame.sprite.Group()
         self.solids = pygame.sprite.Group()
+        self.win_flags = pygame.sprite.Group()
         self.deathzones = pygame.sprite.Group()
         self.maploader = MapLoader(self)
 
@@ -109,13 +119,16 @@ class Game():
 
         self.entities.add(self.solids)
         self.entities.add(self.deathzones)
-        self.entities.add(self.player)
+        self.entities.add(self.player)  
+        self.entities.add(self.win_flags)
 
         self.clock.tick(60)
         while 1:
-            if(self.Loop()):
+            value = self.Loop()
+
+            if value == "DEAD":
                 self.reset()
+            elif value == "WIN":
+                break
 
-
-Game()
 Game()

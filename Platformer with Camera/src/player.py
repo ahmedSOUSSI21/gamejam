@@ -74,6 +74,9 @@ class Player(pygame.sprite.Sprite):
     def check_death(self, deathzones):
         return pygame.sprite.spritecollideany(self, deathzones)    
 
+    def check_win(self, win_flags):
+        return pygame.sprite.spritecollideany(self, win_flags)
+
     def jump(self):
         """Called when the user presses the jump button."""
         if not self.fall:
@@ -100,7 +103,11 @@ class Player(pygame.sprite.Sprite):
             else:
                 self.wait -= dt
         if self.check_death(self.game.deathzones):
-            return True
+            return "DEAD"
+        
+        if self.check_win(self.game.win_flags):
+            return "WIN"
+        
         # Collision, get where player should be
         self.get_position(self.game.solids)
         # Jumping
@@ -109,4 +116,4 @@ class Player(pygame.sprite.Sprite):
         else:
             self.jump_power = 0
 
-        return False
+        return ""
