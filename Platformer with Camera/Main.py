@@ -22,29 +22,12 @@ class Game():
         self.clock = pygame.time.Clock()
         self.last_tick = pygame.time.get_ticks()
         self.screen_res = [750, 500]
-        pygame.time.set_timer(USEREVENT, 1000)
-        self.counter = 10
 
         self.font = pygame.font.SysFont("Consolas", 55)
         self.screen = pygame.display.set_mode(
             self.screen_res, pygame.HWSURFACE, 32)
 
-        self.entities = pygame.sprite.Group()
-        self.solids = pygame.sprite.Group()
-        self.deathzones = pygame.sprite.Group()
-        self.maploader = MapLoader(self)
-        self.maploader.load(1)
-        self.player = self.maploader.player
-        self.camera = self.maploader.camera
-
-        self.entities.add(self.solids)
-        self.entities.add(self.deathzones)
-        self.entities.add(self.player)
-
-        self.clock.tick(60)
-        while 1:
-            if(self.Loop()):
-                self.reset()
+        self.Play()
 
     def Loop(self):
         # main game loop
@@ -81,7 +64,7 @@ class Game():
         self.keys_pressed = pygame.key.get_pressed()
 
     def reset(self):
-        self.__init__()
+        self.Play()
 
     def Draw(self):
         self.screen.fill((150, 150, 150))
@@ -103,6 +86,28 @@ class Game():
         self.screen.blit(score_text, (10, 10))
 
         return False
+
+    def Play(self):
+        pygame.time.set_timer(USEREVENT, 1000)
+        self.counter = 10
+
+        self.entities = pygame.sprite.Group()
+        self.solids = pygame.sprite.Group()
+        self.deathzones = pygame.sprite.Group()
+        self.maploader = MapLoader(self)
+
+        self.maploader.load(1)
+        self.player = self.maploader.player
+        self.camera = self.maploader.camera
+
+        self.entities.add(self.solids)
+        self.entities.add(self.deathzones)
+        self.entities.add(self.player)
+
+        self.clock.tick(60)
+        while 1:
+            if(self.Loop()):
+                self.reset()
 
 
 Game()
