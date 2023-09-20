@@ -8,6 +8,7 @@ import pygame
 from pygame.locals import *
 import sys
 import random
+from src.button import Button
 
 sys.path.append('src')
 
@@ -17,6 +18,10 @@ pygame.init()
 
 class Game():
     def __init__(self):
+
+
+        pygame.display.set_caption('Platformer Rush !')
+
         width = 90 # Largeur de la carte
         height = 20  # Hauteur de la carte
         map_generator = MapGenerator(width, height)
@@ -24,15 +29,16 @@ class Game():
         map_generator.save_map('Maps/map2/level.map')
         pygame.display.set_caption('Platformer')
 
+
         self.clock = pygame.time.Clock()
         self.last_tick = pygame.time.get_ticks()
         self.screen_res = [750, 500]
 
-        self.font = pygame.font.SysFont("Consolas", 55)
+        self.font = pygame.font.SysFont("Impact", 55)
         self.screen = pygame.display.set_mode(
             self.screen_res, pygame.HWSURFACE, 32)
 
-        self.Play()
+        self.Menu()
 
     def Loop(self):
         # main game loop
@@ -67,12 +73,11 @@ class Game():
                     self.counter -= 1
                 else:
                     self.reset()
-            
+
             if event.type == MOUSEBUTTONDOWN:
                 mouse_x, mouse_y = pygame.mouse.get_pos()
-                if mouse_x >= 0 and mouse_x <= 50 and mouse_y >=0 and mouse_y <= 50:
+                if mouse_x >= 0 and mouse_x <= 50 and mouse_y >= 0 and mouse_y <= 50:
                     self.counter += 10
-
 
     def Tick(self):
         self.ttime = self.clock.tick()
@@ -130,10 +135,50 @@ class Game():
         self.clock.tick(60)
         while 1:
             value = self.Loop()
-
             if value == "DEAD":
                 self.reset()
             elif value == "WIN":
                 break
 
+
+    def Menu(self):
+        background_image = pygame.image.load("./Sprites/menu_background.png")
+        screen_size = self.screen.get_size()
+        background_image = pygame.transform.scale(
+            background_image, screen_size)
+
+        while True:
+            self.screen.blit(background_image, (0, 0))
+
+            MENU_MOUSE_POS = pygame.mouse.get_pos()
+
+            MENU_TEXT = self.font.render("MAIN MENU", True, "#111253")
+            MENU_RECT = MENU_TEXT.get_rect(center=(screen_size[0]/2, 50))
+
+            PLAY_BUTTON = Button(image=pygame.image.load("./Sprites/ButtonRect.png"), pos=(screen_size[0]/2, screen_size[1]/2 - 50),
+                                 text_input="PLAY", font=self.font, base_color="White", hovering_color="#6db7f5")
+            QUIT_BUTTON = Button(image=pygame.image.load("./Sprites/ButtonRect.png"), pos=(screen_size[0]/2, screen_size[1]/2 + 100),
+                                 text_input="QUIT", font=self.font, base_color="White", hovering_color="#6db7f5")
+
+            self.screen.blit(MENU_TEXT, MENU_RECT)
+
+            for button in [PLAY_BUTTON, QUIT_BUTTON]:
+                button.changeColor(MENU_MOUSE_POS)
+                button.update(self.screen)
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS):
+                        self.Play()
+                    if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
+                        pygame.quit()
+                        sys.exit()
+
+            pygame.display.update()
+
+
 Game()
+
