@@ -39,7 +39,8 @@ class MapLoader():
                     
                 elif char == '1':
                     block = Block(self.game, [col, row])
-
+                elif char == 'X':
+                    block = Block(self.game, [col, row], True)
                 elif char == '_': pass
 
                 col += 25
