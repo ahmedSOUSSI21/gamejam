@@ -23,7 +23,7 @@ class MapGenerator:
                 row = '_' + '_' * (self.width - 2) + '_'
             self.map.append(row)
 
-        # Placez des groupes de "1" à différents endroits
+        # Place des groupes de "1" à différents endroits
         for _ in range(2, self.height - 2):  # Commence à la troisième ligne, laisse de l'espace en haut et en bas
             row = list(self.map[_])
             i = 1  # Commence après la bordure gauche
