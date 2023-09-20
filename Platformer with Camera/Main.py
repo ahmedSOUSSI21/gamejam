@@ -1,3 +1,7 @@
+from src.cam import *
+from src.maploader import MapLoader
+from src.block import Block
+from src.player import Player
 import pygame
 
 from pygame.locals import *
@@ -6,12 +10,9 @@ import random
 
 sys.path.append('src')
 
-from src.player import Player
-from src.block import Block
-from src.maploader import MapLoader
-from src.cam import *
 
 pygame.init()
+
 
 class Game():
     def __init__(self):
@@ -21,9 +22,12 @@ class Game():
         self.clock = pygame.time.Clock()
         self.last_tick = pygame.time.get_ticks()
         self.screen_res = [750, 500]
+        pygame.time.set_timer(USEREVENT, 1000)
+        self.counter = 10
 
-        self.font = pygame.font.SysFont("Impact", 55)
-        self.screen = pygame.display.set_mode(self.screen_res, pygame.HWSURFACE, 32)
+        self.font = pygame.font.SysFont("Consolas", 55)
+        self.screen = pygame.display.set_mode(
+            self.screen_res, pygame.HWSURFACE, 32)
 
         self.entities = pygame.sprite.Group()
         self.solids = pygame.sprite.Group()
@@ -32,7 +36,7 @@ class Game():
         self.maploader.load(1)
         self.player = self.maploader.player
         self.camera = self.maploader.camera
-        
+
         self.entities.add(self.solids)
         self.entities.add(self.deathzones)
         self.entities.add(self.player)
@@ -41,18 +45,16 @@ class Game():
         while 1:
             if(self.Loop()):
                 self.reset()
-            
 
     def Loop(self):
         # main game loop
         self.eventLoop()
-        
+
         self.Tick()
-        if(self.Draw()):    
+        if(self.Draw()):
             return True
         pygame.display.update()
         return False
-
 
     def eventLoop(self):
         # the main event loop, detects keypresses
@@ -64,10 +66,14 @@ class Game():
                 if event.key == K_RETURN:
                     self.reset()
                     self.maploader.load(2)
-                    
+
                 if event.key == K_SPACE:
                     self.player.jump()
-                    
+            if event.type == USEREVENT:
+                if self.counter > 0:
+                    self.counter -= 1
+                else:
+                    self.reset()
 
     def Tick(self):
         self.ttime = self.clock.tick()
@@ -85,19 +91,24 @@ class Game():
         self.entities.add(self.player)
 
     def Draw(self):
-        self.screen.fill((150,150,150))
+        self.screen.fill((150, 150, 150))
 
-        for l in self.maploader.layers[::-1]:#Update layers (have to reverse list to blit properly)
-            self.screen.blit(l.image, self.camera.apply_layer(l))                
+        # Update layers (have to reverse list to blit properly)
+        for l in self.maploader.layers[::-1]:
+            self.screen.blit(l.image, self.camera.apply_layer(l))
 
         if(self.player.update(self.ttime / 1000.)):
             print("DEAD MAN ! ")
             return True
         self.camera.update(self.player)
-        
-        for e in self.entities: #update blocks etc.
+
+        for e in self.entities:  # update blocks etc.
             self.screen.blit(e.image, self.camera.apply(e))
-        
+
+        # dispaly chrono
+        score_text = self.font.render(str(self.counter), True, (255, 255, 255))
+        self.screen.blit(score_text, (10, 10))
+
         return False
 
 
