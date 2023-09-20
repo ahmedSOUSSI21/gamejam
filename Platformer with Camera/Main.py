@@ -6,10 +6,10 @@ import random
 
 sys.path.append('src')
 
-from player import Player
-from block import Block
-from maploader import MapLoader
-from cam import *
+from src.player import Player
+from src.block import Block
+from src.maploader import MapLoader
+from src.cam import *
 
 pygame.init()
 
