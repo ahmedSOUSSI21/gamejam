@@ -1,5 +1,7 @@
 import pygame
 from pygame.locals import *
+import os, sys
+sys.path.append('src')
 
 class Block(pygame.sprite.Sprite):
     def __init__(self, game, pos, deathzone=False):
@@ -12,8 +14,9 @@ class Block(pygame.sprite.Sprite):
         else:
             self.game.solids.add(self)
 
-        self.image = pygame.Surface([25,25])
-        self.image.fill((255,0,15))
+        self.image = pygame.image.load(os.path.join("Sprites", "block.png"))
+        self.image = pygame.transform.scale(self.image, (25, 25))
+        
         self.rect = self.image.get_rect()
         self.rect.topleft = pos
 
