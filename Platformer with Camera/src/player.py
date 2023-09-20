@@ -1,6 +1,8 @@
 from pygame.locals import *
 import pygame
 import os
+import os, sys
+sys.path.append('src')
 
 
 GRAV = 700
@@ -10,9 +12,15 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, game, pos):
         self.game = game
         pygame.sprite.Sprite.__init__(self)
+        self.images = [pygame.image.load(os.path.join("Sprites", "caracter1.png")), 
+         pygame.image.load(os.path.join("Sprites", "caracter2.png")),
+         pygame.image.load(os.path.join("Sprites", "caracter3.png"))
+        ]
+        
+        self.images = [pygame.transform.scale(img, (50, 50)) for img in self.images]
 
-        self.image = pygame.Surface([25, 50])
-        self.image.fill((0, 0, 255))
+        self.image = self.images[0]
+        self.next_index = 1 
         self.rect = self.image.get_rect(topleft=(pos[0], pos[1]))
         self.true_location = list(self.rect.topleft)
         self.dx = 0
@@ -83,6 +91,10 @@ class Player(pygame.sprite.Sprite):
                 self.dx += self.speed*dt
             if keys[K_q]:
                 self.dx -= self.speed*dt
+            self.image = self.images[self.next_index]
+            self.next_index += 1
+            if self.next_index > 2:
+                self.next_index = 0
         if self.check_death(self.game.deathzones):
             return True
         # Collision, get where player should be
