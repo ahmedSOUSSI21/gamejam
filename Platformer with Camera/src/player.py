@@ -18,7 +18,7 @@ class Player(pygame.sprite.Sprite):
         ]
         
         self.images = [pygame.transform.scale(img, (50, 50)) for img in self.images]
-
+        self.wait = 0
         self.image = self.images[0]
         self.next_index = 1 
         self.rect = self.image.get_rect(topleft=(pos[0], pos[1]))
@@ -91,10 +91,14 @@ class Player(pygame.sprite.Sprite):
                 self.dx += self.speed*dt
             if keys[K_q]:
                 self.dx -= self.speed*dt
-            self.image = self.images[self.next_index]
-            self.next_index += 1
-            if self.next_index > 2:
-                self.next_index = 0
+            if self.wait <= 0:
+                self.image = self.images[self.next_index]
+                self.next_index += 1
+                if self.next_index > 2:
+                    self.next_index = 0
+                self.wait = 0.30
+            else:
+                self.wait -= dt
         if self.check_death(self.game.deathzones):
             return True
         # Collision, get where player should be

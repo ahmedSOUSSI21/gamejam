@@ -11,10 +11,10 @@ class Block(pygame.sprite.Sprite):
         
         if deathzone:
             self.game.deathzones.add(self)
+            self.image = pygame.image.load(os.path.join("Sprites", "deathblock.png"))
         else:
             self.game.solids.add(self)
-
-        self.image = pygame.image.load(os.path.join("Sprites", "block.png"))
+            self.image = pygame.image.load(os.path.join("Sprites", "block.png"))
         self.image = pygame.transform.scale(self.image, (25, 25))
         
         self.rect = self.image.get_rect()
