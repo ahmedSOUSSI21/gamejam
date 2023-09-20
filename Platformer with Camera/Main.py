@@ -17,11 +17,11 @@ pygame.init()
 
 class Game():
     def __init__(self):
-        width = 80  # Largeur de la carte
+        width = 90 # Largeur de la carte
         height = 20  # Hauteur de la carte
         map_generator = MapGenerator(width, height)
         map_generator.generate_map()
-        map_generator.save_map('Maps/map1/level.map')
+        map_generator.save_map('Maps/map2/level.map')
         pygame.display.set_caption('Platformer')
 
         self.clock = pygame.time.Clock()
