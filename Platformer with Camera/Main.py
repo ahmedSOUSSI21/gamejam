@@ -81,14 +81,7 @@ class Game():
         self.keys_pressed = pygame.key.get_pressed()
 
     def reset(self):
-        self.maploader.layers = []
-        player = self.maploader.player
-        self.entities.empty()
-        self.solids.empty()
-        self.deathzones.empty()
-        self.player = player
-
-        self.entities.add(self.player)
+        self.__init__()
 
     def Draw(self):
         self.screen.fill((150, 150, 150))
