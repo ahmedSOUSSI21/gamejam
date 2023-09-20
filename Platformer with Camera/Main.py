@@ -65,7 +65,6 @@ class Game():
                     self.counter += 10
 
 
-
     def Tick(self):
         self.ttime = self.clock.tick()
         self.mpos = pygame.mouse.get_pos()
@@ -118,4 +117,5 @@ class Game():
                 self.reset()
 
 
+Game()
 Game()
