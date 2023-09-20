@@ -52,11 +52,19 @@ class Game():
 
                 if event.key == K_SPACE:
                     self.player.jump()
+
             if event.type == USEREVENT:
                 if self.counter > 0:
                     self.counter -= 1
                 else:
                     self.reset()
+            
+            if event.type == MOUSEBUTTONDOWN:
+                mouse_x, mouse_y = pygame.mouse.get_pos()
+                if mouse_x >= 0 and mouse_x <= 50 and mouse_y >=0 and mouse_y <= 50:
+                    self.counter += 10
+
+
 
     def Tick(self):
         self.ttime = self.clock.tick()
