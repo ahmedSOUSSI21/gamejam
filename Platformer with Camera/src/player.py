@@ -77,7 +77,7 @@ class Player(pygame.sprite.Sprite):
         if 1 in keys:
             if keys[K_d]:
                  self.dx += self.speed*dt
-            if keys[K_a]:
+            if keys[K_q]:
                  self.dx -= self.speed*dt
         #Collision, get where player should be              
         self.get_position(self.game.solids)
