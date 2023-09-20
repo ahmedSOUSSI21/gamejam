@@ -1,4 +1,5 @@
 from src.cam import *
+from Maps.map_generateur import MapGenerator
 from src.maploader import MapLoader
 from src.block import Block
 from src.player import Player
@@ -16,7 +17,11 @@ pygame.init()
 
 class Game():
     def __init__(self):
-
+        width = 80  # Largeur de la carte
+        height = 20  # Hauteur de la carte
+        map_generator = MapGenerator(width, height)
+        map_generator.generate_map()
+        map_generator.save_map('Maps/map1/level.map')
         pygame.display.set_caption('Platformer')
 
         self.clock = pygame.time.Clock()
