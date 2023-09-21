@@ -59,9 +59,9 @@ class MapLoader():
         total_level_height = (len(level) - 3)*25
         self.camera = Camera(self.complex_camera,
                              total_level_width, total_level_height)
-        self.createLayers(map_num)
+        self.createLayers(map_num, total_level_width, total_level_height)
 
-    def createLayers(self, map_num):
+    def createLayers(self, map_num, total_level_width, total_level_height):
         '''function to load map layers, rects and then
         create layer objects and load them into the camera class'''
 
@@ -71,6 +71,7 @@ class MapLoader():
         for index in range(1, len(imgs)):
             image = pygame.image.load(os.path.join("Maps", "map{}".format(
                 map_num), "layers", "%i.png" % (index))).convert_alpha()
+            image = pygame.transform.scale(image, (total_level_width, total_level_height))
             layer = Layer(index, image)
             self.layers.append(layer)
             self.layers.append(layer)

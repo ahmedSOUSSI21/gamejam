@@ -28,7 +28,7 @@ class Game():
         height = 20  # Hauteur de la carte
         map_generator = MapGenerator(width, height)
         map_generator.generate_map()
-        map_generator.save_map('Maps/map2/level.map')
+        map_generator.save_map('Maps/map3/level.map')
         self.map_number = 1
 
         pygame.display.set_caption('Platformer')
