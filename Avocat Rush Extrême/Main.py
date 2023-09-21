@@ -116,12 +116,15 @@ class Game():
             self.screen.blit(e.image, self.camera.apply(e))
 
         # dispaly chrono
-        if self.counter > 0.01:
+        if self.counter < 0.01:
             score_text = self.font.render(
-                str(round(self.counter, 2)), True, (255, 255, 255))
+                str(round(self.counter, 2)), True, '#F40325')
+        elif self.counter < 3 and self.counter > 0.01:
+            score_text = self.font.render(
+                str(round(self.counter, 2)), True, '#F67C07')
         else:
             score_text = self.font.render(
-                str(round(self.counter, 2)), True, '#F61232')
+                str(round(self.counter, 2)), True, (255, 255, 255))
 
         self.screen.blit(score_text, (10, 10))
 
