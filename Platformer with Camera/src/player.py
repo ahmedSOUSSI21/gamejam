@@ -91,9 +91,11 @@ class Player(pygame.sprite.Sprite):
             self.jump_power = self.max_jump_power
             self.fall = True
             self.jump_state = "single"
+            self.jump_sound.play()
         elif self.jump_state == "single":
             self.jump_power *= 2  # Double la hauteur du saut
             self.jump_state = "double"
+            self.jump_sound.play()
 
     def update(self, dt):
         mx, my = pygame.mouse.get_pos()
