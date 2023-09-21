@@ -2,6 +2,7 @@ from pygame.locals import *
 import pygame
 import os
 import os, sys
+import pygame.mixer
 sys.path.append('src')
 
 
@@ -17,6 +18,9 @@ class Player(pygame.sprite.Sprite):
          pygame.image.load(os.path.join("Sprites", "caracter3.png"))
         ]
         
+        self.double_jump_count = 0
+        self.last_jump_time = 0  # Ajoute cette ligne pour initialiser la variable
+        self.jumps_remaining = 2
         self.images = [pygame.transform.scale(img, (50, 50)) for img in self.images]
         self.wait = 0
         self.image = self.images[0]
@@ -29,9 +33,11 @@ class Player(pygame.sprite.Sprite):
         self.max_jump_power = -375
 
         self.speed = 300
-
+        self.jump_sound = pygame.mixer.Sound("Assets/jump.wav")
         self.moving = False
         self.fall = False
+        self.jumps = 0
+        self.jump_state = "single"
 
         self.lives = 3
 
@@ -44,6 +50,9 @@ class Player(pygame.sprite.Sprite):
             self.check_falling(obstacles)
         else:
             self.fall = self.check_collisions((0, self.dy), 1, obstacles)
+            if not self.fall:
+                self.jumps = 0  # Réinitialise le compteur de sauts lorsque le joueur touche le sol
+
         if self.dx:
             self.check_collisions((self.dx, 0), 0, obstacles)
 
@@ -78,10 +87,13 @@ class Player(pygame.sprite.Sprite):
         return pygame.sprite.spritecollideany(self, win_flags)
 
     def jump(self):
-        """Called when the user presses the jump button."""
         if not self.fall:
             self.jump_power = self.max_jump_power
             self.fall = True
+            self.jump_state = "single"
+        elif self.jump_state == "single":
+            self.jump_power *= 2  # Double la hauteur du saut
+            self.jump_state = "double"
 
     def update(self, dt):
         mx, my = pygame.mouse.get_pos()
