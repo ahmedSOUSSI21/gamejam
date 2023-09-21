@@ -20,13 +20,14 @@ class Game():
     def __init__(self):
 
 
-        pygame.display.set_caption('Platformer Rush !')
+        pygame.display.set_caption('Avocat Rush Extrême !')
+        pygame.mixer.init()
 
-        width = 90 # Largeur de la carte
+        width = 80 # Largeur de la carte
         height = 20  # Hauteur de la carte
         map_generator = MapGenerator(width, height)
         map_generator.generate_map()
-        map_generator.save_map('Maps/map2/level.map')
+        map_generator.save_map('Maps/map1/level.map')
         pygame.display.set_caption('Platformer')
 
 
@@ -66,7 +67,16 @@ class Game():
                     self.maploader.load(2)
 
                 if event.key == K_SPACE:
-                    self.player.jump()
+                    if self.player.double_jump_count == 1:
+                        time_since_last_jump = pygame.time.get_ticks() - self.player.last_jump_time
+                        if time_since_last_jump < 500:  # Délai de 500 ms pour le double saut
+                            self.player.jump()
+                    self.player.jump() 
+
+                # Vérifie si la touche "Esc" (code K_ESCAPE) est enfoncée
+                if event.key == K_ESCAPE:
+                    self.GoToMainMenu()  # Appel de la méthode pour revenir au menu
+
 
             if event.type == USEREVENT:
                 if self.counter > 0:
@@ -140,12 +150,32 @@ class Game():
             elif value == "WIN":
                 break
 
+    def GoToMainMenu(self):
+        self.counter = 10  # Réinitialisez le chronomètre si nécessaire
+        self.entities.empty()
+        self.solids.empty()
+        self.win_flags.empty()
+        self.deathzones.empty()
+        self.maploader = MapLoader(self)
+        self.maploader.load(1)
+        self.player = self.maploader.player
+        self.camera = self.maploader.camera
+        self.entities.add(self.solids)
+        self.entities.add(self.deathzones)
+        self.entities.add(self.player)
+        self.entities.add(self.win_flags)
+        self.state = "menu"  # Définissez l'état sur "menu" pour revenir au menu principal
+        self.Menu()  # Appelez la méthode du menu principal pour afficher le menu
+
+
 
     def Menu(self):
         background_image = pygame.image.load("./Sprites/menu_background.png")
         screen_size = self.screen.get_size()
         background_image = pygame.transform.scale(
             background_image, screen_size)
+        pygame.mixer.music.load("Assets/intro.wav")  # charge musique d'intro
+        pygame.mixer.music.play(-1)
 
         while True:
             self.screen.blit(background_image, (0, 0))
@@ -172,8 +202,10 @@ class Game():
                     sys.exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS):
+                        pygame.mixer.music.stop()  # Arrête musique d'introduction
                         self.Play()
                     if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
+                        pygame.mixer.music.stop()  # Arrêtela musique d'intro
                         pygame.quit()
                         sys.exit()
 

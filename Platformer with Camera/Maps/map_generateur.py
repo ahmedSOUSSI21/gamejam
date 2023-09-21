@@ -15,12 +15,14 @@ class MapGenerator:
             elif _ == 1:
                 # Deuxième ligne avec le personnage (P)
                 row = 'P' + '_' * (self.width - 2) + '1'
-            elif _ == self.height - 2:
-                # Avant-dernière ligne avec des caractères 'X'
-                row = 'X' * self.width
             else:
                 # Lignes intérieures avec des caractères aléatoires
                 row = '_' + '_' * (self.width - 2) + '_'
+
+            if _ == self.height - 2:
+                # Ajoute une ligne vide avant les caractères 'X'
+                self.map.append('_' * self.width)
+
             self.map.append(row)
 
         # Place des groupes de "1" à différents endroits
@@ -39,6 +41,9 @@ class MapGenerator:
                 else:
                     i += 1  # Avance d'une case si déjà '1'
             self.map[_] = ''.join(row)
+
+        # Ajoute une ligne entièrement composée de 'X' après la dernière ligne
+        self.map.append('X' * self.width)
 
     def save_map(self, filename):
         # Enregistre la carte dans le fichier
