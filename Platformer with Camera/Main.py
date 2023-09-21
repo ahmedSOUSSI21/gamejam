@@ -22,7 +22,7 @@ class Game():
         pygame.display.set_caption('Avocat Rush Extrême !')
         pygame.mixer.init()
 
-        width = 90 # Largeur de la carte
+        width = 90  # Largeur de la carte
 
         height = 20  # Hauteur de la carte
         map_generator = MapGenerator(width, height)
@@ -68,10 +68,10 @@ class Game():
                     self.maploader.load(2)
 
                 if event.key == K_SPACE:
-                   self.player.jump()
+                    self.player.jump()
 
-                
-                if event.key == K_ESCAPE: # Vérifie si la touche "Esc" (code K_ESCAPE) est enfoncée
+                # Vérifie si la touche "Esc" (code K_ESCAPE) est enfoncée
+                if event.key == K_ESCAPE:
                     self.GoToMainMenu()  # Appel de la méthode pour revenir au menu
 
             if event.type == USEREVENT:
@@ -146,7 +146,7 @@ class Game():
             if value == "DEAD":
                 self.reset()
             elif value == "WIN":
-              self.map_number += 1
+                self.map_number += 1
                 self.reset()
 
                 break
