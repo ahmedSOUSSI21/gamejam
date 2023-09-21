@@ -20,7 +20,8 @@ class Block(pygame.sprite.Sprite):
             self.game.solids.add(self)
             self.image = pygame.image.load(os.path.join("Sprites", "block.png"))
         self.image = pygame.transform.scale(self.image, (25, 25))
-        
+        if win_flag: 
+            self.image = pygame.transform.scale(self.image, (50, 50))
         self.rect = self.image.get_rect()
         self.rect.topleft = pos
 
