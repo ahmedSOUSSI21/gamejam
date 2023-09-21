@@ -1,5 +1,6 @@
 import random
 
+
 class MapGenerator:
     def __init__(self, width, height):
         self.width = width
@@ -22,17 +23,20 @@ class MapGenerator:
             if _ == self.height - 2:
                 # Ajoute une ligne vide avant les caractères 'X'
                 self.map.append('_' * self.width)
+                self.map.append('_' * self.width)
 
             self.map.append(row)
 
         # Place des groupes de "1" à différents endroits
-        for _ in range(2, self.height - 2):  # Commence à la troisième ligne, laisse de l'espace en haut et en bas
+        # Commence à la troisième ligne, laisse de l'espace en haut et en bas
+        for _ in range(2, self.height - 2):
             row = list(self.map[_])
             i = 1  # Commence après la bordure gauche
             while i < self.width - 1:
                 if row[i] == '_':
                     if random.random() < 0.02:  # Probabilité de placer un groupe de "1"
-                        group_size = random.randint(8, 16)  # Taille du groupe de "1"
+                        # Taille du groupe de "1"
+                        group_size = random.randint(8, 16)
                         for j in range(i, min(self.width - 1, i + group_size)):
                             row[j] = '1'
                         i += group_size
