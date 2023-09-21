@@ -184,7 +184,7 @@ class Game():
 
         self.button_sound = pygame.mixer.Sound("./Assets/button.wav")
 
-        background_image = pygame.image.load("./Sprites/menu_background.png")
+        background_image = pygame.image.load("./Sprites/menu_bg.jpg")
         screen_size = self.screen.get_size()
         background_image = pygame.transform.scale(
             background_image, screen_size)
@@ -194,13 +194,16 @@ class Game():
 
             MENU_MOUSE_POS = pygame.mouse.get_pos()
 
-            MENU_TEXT = self.font.render("MAIN MENU", True, "#111253")
+            MENU_TEXT = self.font.render("MAIN MENU", True, "#fec377")
             MENU_RECT = MENU_TEXT.get_rect(center=(screen_size[0]/2, 50))
 
-            PLAY_BUTTON = Button(image=pygame.image.load("./Sprites/ButtonRect.png"), pos=(screen_size[0]/2, screen_size[1]/2 - 50),
-                                 text_input="PLAY", font=self.font, base_color="White", hovering_color="#6db7f5")
-            QUIT_BUTTON = Button(image=pygame.image.load("./Sprites/ButtonRect.png"), pos=(screen_size[0]/2, screen_size[1]/2 + 100),
-                                 text_input="QUIT", font=self.font, base_color="White", hovering_color="#6db7f5")
+            BUTTON_RECT = pygame.image.load("./Sprites/ButtonRect.png")
+            BUTTON_RECT = pygame.transform.scale(BUTTON_RECT, (200, 100))
+
+            PLAY_BUTTON = Button(image=BUTTON_RECT, pos=(screen_size[0]/2, screen_size[1]/2 - 50),
+                                 text_input="PLAY", font=self.font, base_color="White", hovering_color="#fecb88")
+            QUIT_BUTTON = Button(image=BUTTON_RECT, pos=(screen_size[0]/2, screen_size[1]/2 + 100),
+                                 text_input="QUIT", font=self.font, base_color="White", hovering_color="#fecb88")
 
             self.screen.blit(MENU_TEXT, MENU_RECT)
 
