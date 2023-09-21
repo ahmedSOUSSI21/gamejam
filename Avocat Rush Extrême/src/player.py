@@ -1,7 +1,8 @@
 from pygame.locals import *
 import pygame
 import os
-import os, sys
+import os
+import sys
 import pygame.mixer
 sys.path.append('src')
 
@@ -13,18 +14,22 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, game, pos):
         self.game = game
         pygame.sprite.Sprite.__init__(self)
-        self.images = [pygame.image.load(os.path.join("Sprites", "caracter1.png")), 
-         pygame.image.load(os.path.join("Sprites", "caracter2.png")),
-         pygame.image.load(os.path.join("Sprites", "caracter3.png"))
-        ]
-        
+        self.images = [pygame.image.load(os.path.join("Sprites", "caracter1.png")),
+                       pygame.image.load(os.path.join(
+                           "Sprites", "caracter2.png")),
+                       pygame.image.load(os.path.join(
+                           "Sprites", "caracter3.png"))
+                       ]
+
         self.double_jump_count = 0
         self.last_jump_time = 0  # Ajoute cette ligne pour initialiser la variable
         self.jumps_remaining = 2
-        self.images = [pygame.transform.scale(img, (50, 50)) for img in self.images]
+        self.images[0] = pygame.transform.scale(self.images[0], (45, 50))
+        self.images[1] = pygame.transform.scale(self.images[1], (35, 50))
+        self.images[2] = pygame.transform.scale(self.images[2], (45, 50))
         self.wait = 0
         self.image = self.images[0]
-        self.next_index = 1 
+        self.next_index = 1
         self.rect = self.image.get_rect(topleft=(pos[0], pos[1]))
         self.true_location = list(self.rect.topleft)
         self.dx = 0
@@ -81,7 +86,7 @@ class Player(pygame.sprite.Sprite):
         return unaltered
 
     def check_death(self, deathzones):
-        return pygame.sprite.spritecollideany(self, deathzones)    
+        return pygame.sprite.spritecollideany(self, deathzones)
 
     def check_win(self, win_flags):
         return pygame.sprite.spritecollideany(self, win_flags)
@@ -107,13 +112,15 @@ class Player(pygame.sprite.Sprite):
             if keys[K_d]:
                 self.dx += self.speed*dt
                 if self.direction != 1:
-                    self.images = [pygame.transform.flip(img, True, False) for img in self.images]
+                    self.images = [pygame.transform.flip(
+                        img, True, False) for img in self.images]
                     self.image = pygame.transform.flip(self.image, True, False)
                     self.direction = 1
             if keys[K_q]:
                 self.dx -= self.speed*dt
                 if self.direction != 2:
-                    self.images = [pygame.transform.flip(img, True, False) for img in self.images]
+                    self.images = [pygame.transform.flip(
+                        img, True, False) for img in self.images]
                     self.image = pygame.transform.flip(self.image, True, False)
                     self.direction = 2
             if self.wait <= 0:
@@ -126,10 +133,10 @@ class Player(pygame.sprite.Sprite):
                 self.wait -= dt
         if self.check_death(self.game.deathzones):
             return "DEAD"
-        
+
         if self.check_win(self.game.win_flags):
             return "WIN"
-        
+
         # Collision, get where player should be
         self.get_position(self.game.solids)
         # Jumping
