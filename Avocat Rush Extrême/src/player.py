@@ -39,6 +39,7 @@ class Player(pygame.sprite.Sprite):
         self.direction = 1
         self.speed = 300
         self.jump_sound = pygame.mixer.Sound("Assets/jump.wav")
+        self.jump_sound.set_volume(0.5)
         self.moving = False
         self.fall = False
         self.jumps = 0
