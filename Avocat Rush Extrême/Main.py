@@ -116,8 +116,13 @@ class Game():
             self.screen.blit(e.image, self.camera.apply(e))
 
         # dispaly chrono
-        score_text = self.font.render(
-            str(round(self.counter, 2)), True, (255, 255, 255))
+        if self.counter > 0.01:
+            score_text = self.font.render(
+                str(round(self.counter, 2)), True, (255, 255, 255))
+        else:
+            score_text = self.font.render(
+                str(round(self.counter, 2)), True, '#F61232')
+
         self.screen.blit(score_text, (10, 10))
 
         return ""
@@ -157,7 +162,7 @@ class Game():
                 break
 
     def GoToMainMenu(self):
-        self.counter = 10.0  # Réinitialisez le chronomètre si nécessaire
+        self.counter = 10.0  # le chronomètre se rafraichit
         self.entities.empty()
         self.solids.empty()
         self.win_flags.empty()
@@ -170,7 +175,6 @@ class Game():
         self.entities.add(self.deathzones)
         self.entities.add(self.player)
         self.entities.add(self.win_flags)
-        self.state = "menu"  # Définissez l'état sur "menu" pour revenir au menu principal
         self.Menu()  # Appelez la méthode du menu principal pour afficher le menu
 
     def Menu(self):
