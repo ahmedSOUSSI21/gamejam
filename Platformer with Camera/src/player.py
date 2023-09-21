@@ -31,7 +31,7 @@ class Player(pygame.sprite.Sprite):
         self.dy = 0
         self.jump_power = 0
         self.max_jump_power = -375
-
+        self.direction = 1
         self.speed = 300
         self.jump_sound = pygame.mixer.Sound("Assets/jump.wav")
         self.moving = False
@@ -104,8 +104,16 @@ class Player(pygame.sprite.Sprite):
         if 1 in keys:
             if keys[K_d]:
                 self.dx += self.speed*dt
+                if self.direction != 1:
+                    self.images = [pygame.transform.flip(img, True, False) for img in self.images]
+                    self.image = pygame.transform.flip(self.image, True, False)
+                    self.direction = 1
             if keys[K_q]:
                 self.dx -= self.speed*dt
+                if self.direction != 2:
+                    self.images = [pygame.transform.flip(img, True, False) for img in self.images]
+                    self.image = pygame.transform.flip(self.image, True, False)
+                    self.direction = 2
             if self.wait <= 0:
                 self.image = self.images[self.next_index]
                 self.next_index += 1
