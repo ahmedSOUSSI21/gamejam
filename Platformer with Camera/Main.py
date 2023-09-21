@@ -76,7 +76,7 @@ class Game():
                     self.GoToMainMenu()  # Appel de la méthode pour revenir au menu
 
             if event.type == USEREVENT:
-                if self.counter > 0:
+                if self.counter > 0.01:
                     self.counter -= 0.01
                 else:
                     self.death_sound.play()
