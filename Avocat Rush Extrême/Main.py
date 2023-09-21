@@ -276,9 +276,11 @@ class Game():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS):
                         self.button_sound.play()
+                        pygame.mixer.music.stop()  # Arrête musique d'introduction
                         self.map_number = 1
                         self.Play()
                     if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
+                        pygame.mixer.music.stop()  # Arrête musique d'introduction
                         self.button_sound.play()
 
                         pygame.quit()
