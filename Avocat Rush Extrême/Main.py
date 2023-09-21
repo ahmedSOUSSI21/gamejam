@@ -31,7 +31,7 @@ class Game():
         map_generator.save_map('Maps/map4/level.map')
         self.map_number = 1
 
-        pygame.display.set_caption('Platformer')
+        pygame.display.set_caption('Avocat Rush Extrême !')
 
         self.clock = pygame.time.Clock()
         self.last_tick = pygame.time.get_ticks()
@@ -199,26 +199,32 @@ class Game():
             background_image, screen_size)
         pygame.mixer.music.load("Assets/intro.wav")  # charge musique d'intro
         pygame.mixer.music.play(-1)
+        cinzel_font = pygame.font.Font("Assets/Fonts/Cinzel-VariableFont_wght.ttf", 55)
 
         while True:
             self.screen.blit(background_image, (0, 0))
 
             MENU_MOUSE_POS = pygame.mouse.get_pos()
+            title_text = cinzel_font.render("Avocat Rush Extrême !", True, (255, 255, 255))
+            title_rect = title_text.get_rect(center=(self.screen_res[0] // 2, 50))
+            self.screen.blit(title_text, title_rect)
 
             MENU_TEXT = self.font.render("MAIN MENU", True, "#fec377")
-            MENU_RECT = MENU_TEXT.get_rect(center=(screen_size[0]/2, 50))
+            MENU_RECT = MENU_TEXT.get_rect(center=(screen_size[0]/2, 100))
 
             BUTTON_RECT = pygame.image.load("./Sprites/ButtonRect.png")
             BUTTON_RECT = pygame.transform.scale(BUTTON_RECT, (200, 100))
 
             PLAY_BUTTON = Button(image=BUTTON_RECT, pos=(screen_size[0]/2, screen_size[1]/2 - 50),
-                                 text_input="PLAY", font=self.font, base_color="White", hovering_color="#fecb88")
-            QUIT_BUTTON = Button(image=BUTTON_RECT, pos=(screen_size[0]/2, screen_size[1]/2 + 100),
-                                 text_input="QUIT", font=self.font, base_color="White", hovering_color="#fecb88")
+                                 text_input="Play", font=self.font, base_color="White", hovering_color="#fecb88")
+            OPTION_BUTTON = Button(image=BUTTON_RECT, pos=(screen_size[0]/2, screen_size[1]/2 + 60),
+                                 text_input="Option", font=self.font, base_color="White", hovering_color="#fecb88")
+            QUIT_BUTTON = Button(image=BUTTON_RECT, pos=(screen_size[0]/2, screen_size[1]/2 + 170),
+                                 text_input="Quit", font=self.font, base_color="White", hovering_color="#fecb88")
 
             self.screen.blit(MENU_TEXT, MENU_RECT)
 
-            for button in [PLAY_BUTTON, QUIT_BUTTON]:
+            for button in [PLAY_BUTTON, QUIT_BUTTON, OPTION_BUTTON]:
                 button.changeColor(MENU_MOUSE_POS)
                 button.update(self.screen)
 
