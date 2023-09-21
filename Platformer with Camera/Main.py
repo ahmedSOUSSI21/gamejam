@@ -22,11 +22,14 @@ class Game():
         pygame.display.set_caption('Avocat Rush Extrême !')
         pygame.mixer.init()
 
-        width = 80  # Largeur de la carte
+        width = 90 # Largeur de la carte
+
         height = 20  # Hauteur de la carte
         map_generator = MapGenerator(width, height)
         map_generator.generate_map()
-        map_generator.save_map('Maps/map1/level.map')
+        map_generator.save_map('Maps/map2/level.map')
+        self.map_number = 1
+
         pygame.display.set_caption('Platformer')
 
         self.clock = pygame.time.Clock()
@@ -65,14 +68,10 @@ class Game():
                     self.maploader.load(2)
 
                 if event.key == K_SPACE:
-                    if self.player.double_jump_count == 1:
-                        time_since_last_jump = pygame.time.get_ticks() - self.player.last_jump_time
-                        if time_since_last_jump < 500:  # Délai de 500 ms pour le double saut
-                            self.player.jump()
-                    self.player.jump()
+                   self.player.jump()
 
-                # Vérifie si la touche "Esc" (code K_ESCAPE) est enfoncée
-                if event.key == K_ESCAPE:
+                
+                if event.key == K_ESCAPE: # Vérifie si la touche "Esc" (code K_ESCAPE) est enfoncée
                     self.GoToMainMenu()  # Appel de la méthode pour revenir au menu
 
             if event.type == USEREVENT:
@@ -132,7 +131,7 @@ class Game():
         self.deathzones = pygame.sprite.Group()
         self.maploader = MapLoader(self)
 
-        self.maploader.load(1)
+        self.maploader.load(self.map_number)
         self.player = self.maploader.player
         self.camera = self.maploader.camera
 
@@ -147,6 +146,9 @@ class Game():
             if value == "DEAD":
                 self.reset()
             elif value == "WIN":
+              self.map_number += 1
+                self.reset()
+
                 break
 
     def GoToMainMenu(self):
@@ -174,8 +176,6 @@ class Game():
         screen_size = self.screen.get_size()
         background_image = pygame.transform.scale(
             background_image, screen_size)
-        pygame.mixer.music.load("Assets/intro.wav")  # charge musique d'intro
-        pygame.mixer.music.play(-1)
 
         while True:
             self.screen.blit(background_image, (0, 0))
@@ -208,6 +208,7 @@ class Game():
                     if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
                         self.button_sound.play()
                         pygame.mixer.music.stop()  # Arrêtela musique d'intro
+
                         pygame.quit()
                         sys.exit()
 

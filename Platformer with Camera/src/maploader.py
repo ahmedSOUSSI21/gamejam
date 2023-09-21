@@ -73,3 +73,4 @@ class MapLoader():
                 map_num), "layers", "%i.png" % (index))).convert_alpha()
             layer = Layer(index, image)
             self.layers.append(layer)
+            self.layers.append(layer)
