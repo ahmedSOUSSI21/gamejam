@@ -23,7 +23,7 @@ class Game():
         pygame.display.set_caption('Avocat Rush Extrême !')
         pygame.mixer.init()
 
-        width = 90 # Largeur de la carte
+        width = 80 # Largeur de la carte
         height = 20  # Hauteur de la carte
         map_generator = MapGenerator(width, height)
         map_generator.generate_map()
