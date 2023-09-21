@@ -91,8 +91,6 @@ class Game():
         self.keys_pressed = pygame.key.get_pressed()
 
     def reset(self):
-        self.death_sound = pygame.mixer.Sound("./Assets/death.wav")
-        self.death_sound.play()
         self.Play()
 
     def Draw(self):
@@ -140,12 +138,17 @@ class Game():
         self.entities.add(self.player)
         self.entities.add(self.win_flags)
 
+        self.death_sound = pygame.mixer.Sound("./Assets/death.wav")
+        self.victory_sound = pygame.mixer.Sound("./Assets/victory.wav")
+
         self.clock.tick(60)
         while 1:
             value = self.Loop()
             if value == "DEAD":
+                self.death_sound.play()
                 self.reset()
             elif value == "WIN":
+                self.victory_sound.play()
                 self.map_number += 1
                 self.reset()
 
