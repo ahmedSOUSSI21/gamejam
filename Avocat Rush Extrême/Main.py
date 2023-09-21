@@ -68,7 +68,12 @@ class Game():
                     self.maploader.load(2)
 
                 if event.key == K_SPACE:
+                    if self.player.double_jump_count == 1:
+                        time_since_last_jump = pygame.time.get_ticks() - self.player.last_jump_time
+                        if time_since_last_jump < 500:  # Délai de 500 ms pour le double saut
+                            self.player.jump()
                     self.player.jump()
+
 
                 # Vérifie si la touche "Esc" (code K_ESCAPE) est enfoncée
                 if event.key == K_ESCAPE:
@@ -115,12 +120,15 @@ class Game():
             self.screen.blit(e.image, self.camera.apply(e))
 
         # dispaly chrono
-        if self.counter > 0.01:
+        if self.counter < 0.01:
             score_text = self.font.render(
-                str(round(self.counter, 2)), True, (255, 255, 255))
+                str(round(self.counter, 2)), True, '#F40325')
+        elif self.counter < 3 and self.counter > 0.01:
+            score_text = self.font.render(
+                str(round(self.counter, 2)), True, '#F67C07')
         else:
             score_text = self.font.render(
-                str(round(self.counter, 2)), True, '#F61232')
+                str(round(self.counter, 2)), True, (255, 255, 255))
 
         self.screen.blit(score_text, (10, 10))
 
@@ -186,6 +194,8 @@ class Game():
         screen_size = self.screen.get_size()
         background_image = pygame.transform.scale(
             background_image, screen_size)
+        pygame.mixer.music.load("Assets/intro.wav")  # charge musique d'intro
+        pygame.mixer.music.play(-1)
 
         while True:
             self.screen.blit(background_image, (0, 0))
