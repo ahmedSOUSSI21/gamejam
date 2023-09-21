@@ -21,6 +21,7 @@ class Game():
 
         pygame.display.set_caption('Avocat Rush Extrême !')
         pygame.mixer.init()
+        self.death_sound = pygame.mixer.Sound("./Assets/death.wav")
 
         width = 90  # Largeur de la carte
 
@@ -76,8 +77,9 @@ class Game():
 
             if event.type == USEREVENT:
                 if self.counter > 0:
-                    self.counter -= 1
+                    self.counter -= 0.01
                 else:
+                    self.death_sound.play()
                     self.reset()
 
             if event.type == MOUSEBUTTONDOWN:
@@ -114,14 +116,15 @@ class Game():
             self.screen.blit(e.image, self.camera.apply(e))
 
         # dispaly chrono
-        score_text = self.font.render(str(self.counter), True, (255, 255, 255))
+        score_text = self.font.render(
+            str(round(self.counter, 2)), True, (255, 255, 255))
         self.screen.blit(score_text, (10, 10))
 
         return ""
 
     def Play(self):
-        pygame.time.set_timer(USEREVENT, 1000)
-        self.counter = 10
+        pygame.time.set_timer(USEREVENT, 10)
+        self.counter = 10.0
 
         self.entities = pygame.sprite.Group()
         self.solids = pygame.sprite.Group()
@@ -138,7 +141,6 @@ class Game():
         self.entities.add(self.player)
         self.entities.add(self.win_flags)
 
-        self.death_sound = pygame.mixer.Sound("./Assets/death.wav")
         self.victory_sound = pygame.mixer.Sound("./Assets/victory.wav")
 
         self.clock.tick(60)
@@ -155,7 +157,7 @@ class Game():
                 break
 
     def GoToMainMenu(self):
-        self.counter = 10  # Réinitialisez le chronomètre si nécessaire
+        self.counter = 10.0  # Réinitialisez le chronomètre si nécessaire
         self.entities.empty()
         self.solids.empty()
         self.win_flags.empty()
