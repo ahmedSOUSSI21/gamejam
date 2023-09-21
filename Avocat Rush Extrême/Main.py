@@ -22,7 +22,6 @@ class Game():
         pygame.display.set_caption('Avocat Rush Extrême !')
         pygame.mixer.init()
         self.death_sound = pygame.mixer.Sound("./Assets/death.wav")
-
         width = 90  # Largeur de la carte
 
         height = 20  # Hauteur de la carte
@@ -147,7 +146,9 @@ class Game():
         self.entities.add(self.win_flags)
 
         self.victory_sound = pygame.mixer.Sound("./Assets/victory.wav")
-
+        self.fire_sound = pygame.mixer.Sound("./Assets/fire.mp3")
+        self.fire_sound.set_volume(0.2)
+        self.fire_sound.play()
         self.clock.tick(60)
         while 1:
             value = self.Loop()
