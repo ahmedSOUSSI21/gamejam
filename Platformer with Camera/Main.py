@@ -19,10 +19,11 @@ pygame.init()
 class Game():
     def __init__(self):
 
-
-        pygame.display.set_caption('Platformer Rush !')
+        pygame.display.set_caption('Avocat Rush Extrême !')
+        pygame.mixer.init()
 
         width = 90 # Largeur de la carte
+
         height = 20  # Hauteur de la carte
         map_generator = MapGenerator(width, height)
         map_generator.generate_map()
@@ -30,7 +31,6 @@ class Game():
         self.map_number = 1
 
         pygame.display.set_caption('Platformer')
-
 
         self.clock = pygame.time.Clock()
         self.last_tick = pygame.time.get_ticks()
@@ -52,7 +52,7 @@ class Game():
             return "DEAD"
         elif value == "WIN":
             return "WIN"
-        
+
         pygame.display.update()
         return ""
 
@@ -68,7 +68,11 @@ class Game():
                     self.maploader.load(2)
 
                 if event.key == K_SPACE:
-                    self.player.jump()
+                   self.player.jump()
+
+                
+                if event.key == K_ESCAPE: # Vérifie si la touche "Esc" (code K_ESCAPE) est enfoncée
+                    self.GoToMainMenu()  # Appel de la méthode pour revenir au menu
 
             if event.type == USEREVENT:
                 if self.counter > 0:
@@ -87,6 +91,8 @@ class Game():
         self.keys_pressed = pygame.key.get_pressed()
 
     def reset(self):
+        self.death_sound = pygame.mixer.Sound("./Assets/death.wav")
+        self.death_sound.play()
         self.Play()
 
     def Draw(self):
@@ -103,7 +109,7 @@ class Game():
         elif value == "WIN":
             print("WIN")
             return "WIN"
-        
+
         self.camera.update(self.player)
 
         for e in self.entities:  # update blocks etc.
@@ -131,7 +137,7 @@ class Game():
 
         self.entities.add(self.solids)
         self.entities.add(self.deathzones)
-        self.entities.add(self.player)  
+        self.entities.add(self.player)
         self.entities.add(self.win_flags)
 
         self.clock.tick(60)
@@ -140,11 +146,32 @@ class Game():
             if value == "DEAD":
                 self.reset()
             elif value == "WIN":
-                self.map_number += 1
+              self.map_number += 1
                 self.reset()
 
+                break
+
+    def GoToMainMenu(self):
+        self.counter = 10  # Réinitialisez le chronomètre si nécessaire
+        self.entities.empty()
+        self.solids.empty()
+        self.win_flags.empty()
+        self.deathzones.empty()
+        self.maploader = MapLoader(self)
+        self.maploader.load(1)
+        self.player = self.maploader.player
+        self.camera = self.maploader.camera
+        self.entities.add(self.solids)
+        self.entities.add(self.deathzones)
+        self.entities.add(self.player)
+        self.entities.add(self.win_flags)
+        self.state = "menu"  # Définissez l'état sur "menu" pour revenir au menu principal
+        self.Menu()  # Appelez la méthode du menu principal pour afficher le menu
 
     def Menu(self):
+
+        self.button_sound = pygame.mixer.Sound("./Assets/button.wav")
+
         background_image = pygame.image.load("./Sprites/menu_background.png")
         screen_size = self.screen.get_size()
         background_image = pygame.transform.scale(
@@ -175,8 +202,13 @@ class Game():
                     sys.exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS):
+                        self.button_sound.play()
+                        pygame.mixer.music.stop()  # Arrête musique d'introduction
                         self.Play()
                     if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
+                        self.button_sound.play()
+                        pygame.mixer.music.stop()  # Arrêtela musique d'intro
+
                         pygame.quit()
                         sys.exit()
 
@@ -184,4 +216,3 @@ class Game():
 
 
 Game()
-
