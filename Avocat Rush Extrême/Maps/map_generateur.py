@@ -1,6 +1,5 @@
 import random
 
-
 class MapGenerator:
     def __init__(self, width, height):
         self.width = width
@@ -45,6 +44,11 @@ class MapGenerator:
                 else:
                     i += 1  # Avance d'une case si déjà '1'
             self.map[_] = ''.join(row)
+
+        # Ajoute un 'W' sur la dernière ligne verticale
+        for _ in range(2, self.height - 2):
+            if random.random() < 0.1:  # Probabilité de placer un 'W'
+                self.map[_] = self.map[_][:self.width - 1] + 'W' + self.map[_][self.width:]
 
         # Ajoute une ligne entièrement composée de 'X' après la dernière ligne
         self.map.append('X' * self.width)
