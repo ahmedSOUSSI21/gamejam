@@ -74,7 +74,6 @@ class Game():
                             self.player.jump()
                     self.player.jump()
 
-
                 # Vérifie si la touche "Esc" (code K_ESCAPE) est enfoncée
                 if event.key == K_ESCAPE:
                     self.GoToMainMenu()  # Appel de la méthode pour revenir au menu
@@ -97,6 +96,8 @@ class Game():
         self.keys_pressed = pygame.key.get_pressed()
 
     def reset(self):
+        if self.map_number > 4:
+            self.WinMenu()
         self.Play()
 
     def Draw(self):
@@ -231,6 +232,52 @@ class Game():
                     if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
                         self.button_sound.play()
                         pygame.mixer.music.stop()  # Arrêtela musique d'intro
+
+                        pygame.quit()
+                        sys.exit()
+
+            pygame.display.update()
+
+    def WinMenu(self):
+        self.button_sound = pygame.mixer.Sound("./Assets/button.wav")
+        background_image = pygame.image.load("./Sprites/menu_bg.jpg")
+        screen_size = self.screen.get_size()
+        background_image = pygame.transform.scale(
+            background_image, screen_size)
+        pygame.mixer.music.play(-1)
+        while True:
+            self.screen.blit(background_image, (0, 0))
+
+            MENU_MOUSE_POS = pygame.mouse.get_pos()
+
+            MENU_TEXT = self.font.render("You Won !", True, "#fec377")
+            MENU_RECT = MENU_TEXT.get_rect(center=(screen_size[0]/2, 50))
+
+            BUTTON_RECT = pygame.image.load("./Sprites/ButtonRect.png")
+            BUTTON_RECT = pygame.transform.scale(BUTTON_RECT, (250, 100))
+
+            PLAY_BUTTON = Button(image=BUTTON_RECT, pos=(screen_size[0]/2, screen_size[1]/2 - 50),
+                                 text_input="PLAY AGAIN", font=self.font, base_color="White", hovering_color="#fecb88")
+            QUIT_BUTTON = Button(image=BUTTON_RECT, pos=(screen_size[0]/2, screen_size[1]/2 + 100),
+                                 text_input="QUIT", font=self.font, base_color="White", hovering_color="#fecb88")
+
+            self.screen.blit(MENU_TEXT, MENU_RECT)
+
+            for button in [PLAY_BUTTON, QUIT_BUTTON]:
+                button.changeColor(MENU_MOUSE_POS)
+                button.update(self.screen)
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS):
+                        self.button_sound.play()
+                        self.map_number = 1
+                        self.Play()
+                    if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
+                        self.button_sound.play()
 
                         pygame.quit()
                         sys.exit()
