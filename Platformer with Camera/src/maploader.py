@@ -66,8 +66,3 @@ class MapLoader():
             image = pygame.image.load(os.path.join("Maps","map{}".format(map_num),"layers", "%i.png"%(index))).convert_alpha()
             layer = Layer(index, image)
             self.layers.append(layer)
-
-
-
-
-

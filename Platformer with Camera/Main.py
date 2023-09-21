@@ -27,6 +27,8 @@ class Game():
         map_generator = MapGenerator(width, height)
         map_generator.generate_map()
         map_generator.save_map('Maps/map2/level.map')
+        self.map_number = 1
+
         pygame.display.set_caption('Platformer')
 
 
@@ -123,7 +125,7 @@ class Game():
         self.deathzones = pygame.sprite.Group()
         self.maploader = MapLoader(self)
 
-        self.maploader.load(1)
+        self.maploader.load(self.map_number)
         self.player = self.maploader.player
         self.camera = self.maploader.camera
 
@@ -138,7 +140,8 @@ class Game():
             if value == "DEAD":
                 self.reset()
             elif value == "WIN":
-                break
+                self.map_number += 1
+                self.reset()
 
 
     def Menu(self):
