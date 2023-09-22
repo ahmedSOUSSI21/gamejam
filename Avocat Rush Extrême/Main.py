@@ -67,13 +67,8 @@ class Game():
             if event.type == KEYDOWN:
                 if event.key == K_RETURN:
                     self.reset()
-                    self.maploader.load(2)
 
                 if event.key == K_SPACE:
-                    if self.player.double_jump_count == 1:
-                        time_since_last_jump = pygame.time.get_ticks() - self.player.last_jump_time
-                        if time_since_last_jump < 500:  # Délai de 500 ms pour le double saut
-                            self.player.jump()
                     self.player.jump()
 
                 # Vérifie si la touche "Esc" (code K_ESCAPE) est enfoncée
