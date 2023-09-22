@@ -29,7 +29,7 @@ class Game():
         map_generator = MapGenerator(width, height)
         map_generator.generate_map()
         map_generator.save_map('Maps/map6/level.map')
-        self.map_number = 4
+        self.map_number = 1
 
         pygame.display.set_caption('Avocat Rush Extrême !')
 
