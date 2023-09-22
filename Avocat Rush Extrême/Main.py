@@ -37,7 +37,8 @@ class Game():
         self.last_tick = pygame.time.get_ticks()
         self.screen_res = [750, 500]
 
-        self.font = pygame.font.SysFont("Impact", 55)
+        self.font = pygame.font.Font(
+            "Assets/Fonts/static/Cinzel-Bold.ttf", 55)
         self.screen = pygame.display.set_mode(
             self.screen_res, pygame.HWSURFACE, 32)
 
@@ -193,32 +194,33 @@ class Game():
 
         self.button_sound = pygame.mixer.Sound("./Assets/button.wav")
 
-        background_image = pygame.image.load("./Sprites/menu_bg.jpg")
+        background_image = pygame.image.load("./Assets/menu_bg.jpg")
         screen_size = self.screen.get_size()
         background_image = pygame.transform.scale(
             background_image, screen_size)
         pygame.mixer.music.load("Assets/intro.wav")  # charge musique d'intro
         pygame.mixer.music.play(-1)
-        cinzel_font = pygame.font.Font("Assets/Fonts/Cinzel-VariableFont_wght.ttf", 55)
 
         while True:
             self.screen.blit(background_image, (0, 0))
 
             MENU_MOUSE_POS = pygame.mouse.get_pos()
-            title_text = cinzel_font.render("Avocat Rush Extrême !", True, (255, 255, 255))
-            title_rect = title_text.get_rect(center=(self.screen_res[0] // 2, 50))
+            title_text = self.font.render(
+                "Avocat Rush Extrême !", True, (255, 255, 255))
+            title_rect = title_text.get_rect(
+                center=(self.screen_res[0] // 2, 50))
             self.screen.blit(title_text, title_rect)
 
             MENU_TEXT = self.font.render("MAIN MENU", True, "#fec377")
             MENU_RECT = MENU_TEXT.get_rect(center=(screen_size[0]/2, 100))
 
             BUTTON_RECT = pygame.image.load("./Sprites/ButtonRect.png")
-            BUTTON_RECT = pygame.transform.scale(BUTTON_RECT, (200, 100))
+            BUTTON_RECT = pygame.transform.scale(BUTTON_RECT, (230, 100))
 
             PLAY_BUTTON = Button(image=BUTTON_RECT, pos=(screen_size[0]/2, screen_size[1]/2 - 50),
                                  text_input="Play", font=self.font, base_color="White", hovering_color="#fecb88")
             OPTION_BUTTON = Button(image=BUTTON_RECT, pos=(screen_size[0]/2, screen_size[1]/2 + 60),
-                                 text_input="Option", font=self.font, base_color="White", hovering_color="#fecb88")
+                                   text_input="Option", font=self.font, base_color="White", hovering_color="#fecb88")
             QUIT_BUTTON = Button(image=BUTTON_RECT, pos=(screen_size[0]/2, screen_size[1]/2 + 170),
                                  text_input="Quit", font=self.font, base_color="White", hovering_color="#fecb88")
 
@@ -248,7 +250,7 @@ class Game():
 
     def WinMenu(self):
         self.button_sound = pygame.mixer.Sound("./Assets/button.wav")
-        background_image = pygame.image.load("./Sprites/menu_bg.jpg")
+        background_image = pygame.image.load("./Assets/Win_bg.jpg")
         screen_size = self.screen.get_size()
         background_image = pygame.transform.scale(
             background_image, screen_size)
