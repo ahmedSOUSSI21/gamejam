@@ -73,7 +73,7 @@ class Game():
                 if event.key == K_RETURN:
                     self.reset()
 
-                if event.key == K_SPACE:
+                if event.key == K_SPACE or event.key == K_z:
                     self.player.jump()
 
                 # Vérifie si la touche "Esc" (code K_ESCAPE) est enfoncée
