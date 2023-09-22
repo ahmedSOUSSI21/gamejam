@@ -46,6 +46,8 @@ class MapLoader():
                     block = Block(self.game, [col, row], deathzone=True)
                 elif char == 'W':
                     block = Block(self.game, [col, row], win_flag=True)
+                elif char == '2':
+                    block = Block(self.game, [col, row], bug=True)
                 elif char == '_':
                     pass
 
