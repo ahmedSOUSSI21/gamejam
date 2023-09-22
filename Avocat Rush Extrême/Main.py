@@ -89,7 +89,7 @@ class Game():
 
             if event.type == MOUSEBUTTONDOWN:
                 mouse_x, mouse_y = pygame.mouse.get_pos()
-                if mouse_x >= 0 and mouse_x <= 50 and mouse_y >= 0 and mouse_y <= 50:
+                if mouse_x >= 620 and mouse_x <= 750 and mouse_y >= 0 and mouse_y <= 50:
                     self.counter += 10
 
     def Tick(self):
@@ -145,7 +145,7 @@ class Game():
         shadow_score_text_rect = shadow_score_text.get_rect()
 
         # Positionne le texte des secondes et son ombre
-        x = 620
+        x = 610
         y = 10
         score_text_rect.topleft = (x, y)  # Position du texte des secondes
         # Position de l'ombre (légèrement décalée)
