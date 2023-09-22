@@ -131,7 +131,24 @@ class Game():
                 str(round(self.counter, 2)), True, '#F67C07')
         else:
             score_text = self.font.render(
-                str(round(self.counter, 2)), True, (255, 255, 255))
+                str(round(self.counter, 2)), True, '#F5D63D')
+            score_text = self.font.render(str(round(self.counter, 2)), True, (245, 214, 61))  # Couleur du texte
+
+            shadow_score_text = self.font.render(str(round(self.counter, 2)), True, (0, 0, 0))  # Couleur de l'ombre
+
+            # Obtene les rectangles pour les deux textes
+            score_text_rect = score_text.get_rect()
+            shadow_score_text_rect = shadow_score_text.get_rect()
+
+            # Positionne le texte des secondes et son ombre
+            x = 10  
+            y = 10 
+            score_text_rect.topleft = (x, y)  # Position du texte des secondes
+            shadow_score_text_rect.topleft = (x + 3, y + 3)  # Position de l'ombre (légèrement décalée)
+
+            # Blitte d'abord l'ombre, puis le texte des secondes
+            self.screen.blit(shadow_score_text, shadow_score_text_rect)
+            self.screen.blit(score_text, score_text_rect)
 
         self.screen.blit(score_text, (10, 10))
 
@@ -188,7 +205,7 @@ class Game():
         self.entities.add(self.deathzones)
         self.entities.add(self.player)
         self.entities.add(self.win_flags)
-        self.Menu()  # Appelez la méthode du menu principal pour afficher le menu
+        self.Menu()  # Appele la méthode du menu principal pour afficher le menu
 
     def Menu(self):
 
@@ -203,6 +220,13 @@ class Game():
 
         cinzel_font = pygame.font.Font(
             "Assets/Fonts/static/Cinzel-Regular.ttf", 40)
+        
+        # Chargement de l'image "temp.png"
+        temp_image = pygame.image.load("Assets/temp.png")
+
+        # Position de l'image "temp.png" à gauche
+        temp_rect = temp_image.get_rect()
+        temp_rect.topleft = (10, 10)  # Ajuste les coordonnées selon votre préférence
 
         while True:
             self.screen.blit(background_image, (0, 0))
@@ -214,7 +238,7 @@ class Game():
                 center=(self.screen_res[0] // 2, 50))
             self.screen.blit(title_text, title_rect)
 
-            # Créez une surface pour l'ombre en noir en utilisant une position légèrement décalée
+            # Crée une surface pour l'ombre en noir en utilisant une position légèrement décalée
             shadow_text = cinzel_font.render(
                 "Avocat Rush Extrême !", True, (0, 0, 0))
             shadow_rect = shadow_text.get_rect(
@@ -229,7 +253,7 @@ class Game():
             BUTTON_RECT = pygame.image.load("./Sprites/ButtonRect.png")
             BUTTON_RECT = pygame.transform.scale(BUTTON_RECT, (230, 100))
 
-            # Appliquer l'effet d'ombre aux éléments de texte
+            # Applique l'effet d'ombre aux éléments de texte
             MENU_TEXT = self.font.render("MAIN MENU", True, (255, 255, 255))
             shadow_menu_text = self.font.render("MAIN MENU", True, (0, 0, 0))
             shadow_menu_rect = shadow_menu_text.get_rect(
