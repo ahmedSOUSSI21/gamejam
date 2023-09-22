@@ -32,7 +32,7 @@ class Game():
         height = 20  # Hauteur de la carte
         map_generator = MapGenerator(width, height)
         map_generator.generate_map()
-        map_generator.save_map('Maps/map4/level.map')
+        map_generator.save_map('Maps/map6/level.map')
         self.map_number = 1
 
         pygame.display.set_caption('Avocat Rush Extrême !')
@@ -98,7 +98,7 @@ class Game():
         self.keys_pressed = pygame.key.get_pressed()
 
     def reset(self):
-        if self.map_number > 4:
+        if self.map_number > 6:
             self.WinMenu()
         self.Play()
 
