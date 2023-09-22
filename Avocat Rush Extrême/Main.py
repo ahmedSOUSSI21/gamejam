@@ -42,6 +42,7 @@ class Game():
         self.screen_res = [750, 500]
 
         self.font = pygame.font.Font("Assets/Fonts/pixel_operator/PixelOperatorSC-Bold.ttf", 55)
+
         self.screen = pygame.display.set_mode(
             self.screen_res, pygame.HWSURFACE, 32)
 
@@ -70,13 +71,8 @@ class Game():
             if event.type == KEYDOWN:
                 if event.key == K_RETURN:
                     self.reset()
-                    self.maploader.load(2)
 
                 if event.key == K_SPACE:
-                    if self.player.double_jump_count == 1:
-                        time_since_last_jump = pygame.time.get_ticks() - self.player.last_jump_time
-                        if time_since_last_jump < 500:  # Délai de 500 ms pour le double saut
-                            self.player.jump()
                     self.player.jump()
 
                 # Vérifie si la touche "Esc" (code K_ESCAPE) est enfoncée
@@ -197,20 +193,23 @@ class Game():
 
         self.button_sound = pygame.mixer.Sound("./Assets/button.wav")
 
-        background_image = pygame.image.load("./Sprites/menu_bg.jpg")
+        background_image = pygame.image.load("./Assets/menu_bg.jpg")
         screen_size = self.screen.get_size()
         background_image = pygame.transform.scale(
             background_image, screen_size)
         pygame.mixer.music.load("Assets/intro.wav")  # charge musique d'intro
         pygame.mixer.music.play(-1)
+
         cinzel_font = pygame.font.Font("Assets/Fonts/static/Cinzel-Regular.ttf", 40)
 
         while True:
             self.screen.blit(background_image, (0, 0))
 
             MENU_MOUSE_POS = pygame.mouse.get_pos()
-            title_text = cinzel_font.render("Avocat Rush Extrême !", True, (255, 255, 255))
-            title_rect = title_text.get_rect(center=(self.screen_res[0] // 2, 50))
+            title_text = self.font.render(
+                "Avocat Rush Extrême !", True, (255, 255, 255))
+            title_rect = title_text.get_rect(
+                center=(self.screen_res[0] // 2, 50))
             self.screen.blit(title_text, title_rect)
 
             # Créez une surface pour l'ombre en noir en utilisant une position légèrement décalée
@@ -223,7 +222,7 @@ class Game():
             self.screen.blit(shadow_text, shadow_rect)
             self.screen.blit(title_text, title_rect)
             BUTTON_RECT = pygame.image.load("./Sprites/ButtonRect.png")
-            BUTTON_RECT = pygame.transform.scale(BUTTON_RECT, (200, 100))
+            BUTTON_RECT = pygame.transform.scale(BUTTON_RECT, (230, 100))
 
             # Appliquer l'effet d'ombre aux éléments de texte
             MENU_TEXT = self.font.render("MAIN MENU", True, (255, 255, 255))
@@ -240,6 +239,7 @@ class Game():
             play_rect = play_text.get_rect(center=(screen_size[0]/2, screen_size[1]/2 - 50))
 
             OPTION_BUTTON = Button(image=BUTTON_RECT, pos=(screen_size[0]/2, screen_size[1]/2 + 60),
+                                   
                                    text_input="Option", font=self.font, base_color="White", hovering_color="#fecb88",
                                    button_size=(200, 60))
             option_text = self.font.render("Option", True, (255, 255, 255))
@@ -294,7 +294,7 @@ class Game():
 
     def WinMenu(self):
         self.button_sound = pygame.mixer.Sound("./Assets/button.wav")
-        background_image = pygame.image.load("./Sprites/menu_bg.jpg")
+        background_image = pygame.image.load("./Assets/Win_bg.jpg")
         screen_size = self.screen.get_size()
         background_image = pygame.transform.scale(
             background_image, screen_size)
