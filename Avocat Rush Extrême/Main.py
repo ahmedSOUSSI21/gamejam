@@ -15,6 +15,10 @@ sys.path.append('src')
 
 pygame.init()
 
+icon_image = pygame.image.load("Assets/Icon/icon_appli1.png")
+pygame.display.set_icon(icon_image)
+screen = pygame.display.set_mode((800,600))
+
 
 class Game():
     def __init__(self):
@@ -37,8 +41,8 @@ class Game():
         self.last_tick = pygame.time.get_ticks()
         self.screen_res = [750, 500]
 
-        self.font = pygame.font.Font(
-            "Assets/Fonts/static/Cinzel-Bold.ttf", 55)
+        self.font = pygame.font.Font("Assets/Fonts/pixel_operator/PixelOperatorSC-Bold.ttf", 55)
+
         self.screen = pygame.display.set_mode(
             self.screen_res, pygame.HWSURFACE, 32)
 
@@ -196,6 +200,8 @@ class Game():
         pygame.mixer.music.load("Assets/intro.wav")  # charge musique d'intro
         pygame.mixer.music.play(-1)
 
+        cinzel_font = pygame.font.Font("Assets/Fonts/static/Cinzel-Regular.ttf", 40)
+
         while True:
             self.screen.blit(background_image, (0, 0))
 
@@ -206,20 +212,63 @@ class Game():
                 center=(self.screen_res[0] // 2, 50))
             self.screen.blit(title_text, title_rect)
 
-            MENU_TEXT = self.font.render("MAIN MENU", True, "#fec377")
-            MENU_RECT = MENU_TEXT.get_rect(center=(screen_size[0]/2, 100))
+            # Créez une surface pour l'ombre en noir en utilisant une position légèrement décalée
+            shadow_text = cinzel_font.render("Avocat Rush Extrême !", True, (0, 0, 0))
+            shadow_rect = shadow_text.get_rect(center=(self.screen_res[0] // 2 + 3, 50 + 3))  # Légèrement décalée
 
+            title_rect = title_text.get_rect(center=(self.screen_res[0] // 2, 50))
+            
+            # Blit l'ombre d'abord, puis le texte principal
+            self.screen.blit(shadow_text, shadow_rect)
+            self.screen.blit(title_text, title_rect)
             BUTTON_RECT = pygame.image.load("./Sprites/ButtonRect.png")
             BUTTON_RECT = pygame.transform.scale(BUTTON_RECT, (230, 100))
 
-            PLAY_BUTTON = Button(image=BUTTON_RECT, pos=(screen_size[0]/2, screen_size[1]/2 - 50),
-                                 text_input="Play", font=self.font, base_color="White", hovering_color="#fecb88")
-            OPTION_BUTTON = Button(image=BUTTON_RECT, pos=(screen_size[0]/2, screen_size[1]/2 + 60),
-                                   text_input="Option", font=self.font, base_color="White", hovering_color="#fecb88")
-            QUIT_BUTTON = Button(image=BUTTON_RECT, pos=(screen_size[0]/2, screen_size[1]/2 + 170),
-                                 text_input="Quit", font=self.font, base_color="White", hovering_color="#fecb88")
+            # Appliquer l'effet d'ombre aux éléments de texte
+            MENU_TEXT = self.font.render("MAIN MENU", True, (255, 255, 255))
+            shadow_menu_text = self.font.render("MAIN MENU", True, (0, 0, 0))
+            shadow_menu_rect = shadow_menu_text.get_rect(center=(self.screen_res[0] // 2 + 3, 100 + 3))
+            menu_rect = MENU_TEXT.get_rect(center=(self.screen_res[0] // 2, 100))
 
-            self.screen.blit(MENU_TEXT, MENU_RECT)
+            PLAY_BUTTON = Button(image=BUTTON_RECT, pos=(screen_size[0]/2, screen_size[1]/2 - 50),
+                                 text_input="Play", font=self.font, base_color="White", hovering_color="#fecb88",
+                                 button_size=(200, 60))
+            play_text = self.font.render("Play", True, (255, 255, 255))
+            shadow_play_text = self.font.render("Play", True, (0, 0, 0))
+            shadow_play_rect = shadow_play_text.get_rect(center=(screen_size[0]/2 + 3, screen_size[1]/2 - 50 + 3))
+            play_rect = play_text.get_rect(center=(screen_size[0]/2, screen_size[1]/2 - 50))
+
+            OPTION_BUTTON = Button(image=BUTTON_RECT, pos=(screen_size[0]/2, screen_size[1]/2 + 60),
+                                   
+                                   text_input="Option", font=self.font, base_color="White", hovering_color="#fecb88",
+                                   button_size=(200, 60))
+            option_text = self.font.render("Option", True, (255, 255, 255))
+            shadow_option_text = self.font.render("Option", True, (0, 0, 0))
+            shadow_option_rect = shadow_option_text.get_rect(center=(screen_size[0]/2 + 3, screen_size[1]/2 + 60 + 3))
+            option_rect = option_text.get_rect(center=(screen_size[0]/2, screen_size[1]/2 + 60))
+
+            QUIT_BUTTON = Button(image=BUTTON_RECT, pos=(screen_size[0]/2, screen_size[1]/2 + 170),
+                                 text_input="Quit", font=self.font, base_color="White", hovering_color="#fecb88",
+                                 button_size=(200, 60))
+            quit_text = self.font.render("Quit", True, (255, 255, 255))
+            shadow_quit_text = self.font.render("Quit", True, (0, 0, 0))
+            shadow_quit_rect = shadow_quit_text.get_rect(center=(screen_size[0]/2 + 3, screen_size[1]/2 + 170 + 3))
+            quit_rect = quit_text.get_rect(center=(screen_size[0]/2, screen_size[1]/2 + 170))
+
+            # Blit l'effet d'ombre d'abord, puis le texte principal
+            self.screen.blit(shadow_menu_text, shadow_menu_rect)
+            self.screen.blit(MENU_TEXT, menu_rect)
+
+            self.screen.blit(shadow_play_text, shadow_play_rect)
+            self.screen.blit(play_text, play_rect)
+
+            self.screen.blit(shadow_option_text, shadow_option_rect)
+            self.screen.blit(option_text, option_rect)
+
+            self.screen.blit(shadow_quit_text, shadow_quit_rect)
+            self.screen.blit(quit_text, quit_rect)
+
+            #self.screen.blit(MENU_TEXT, menu_rect)
 
             for button in [PLAY_BUTTON, QUIT_BUTTON, OPTION_BUTTON]:
                 button.changeColor(MENU_MOUSE_POS)
