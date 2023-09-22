@@ -126,31 +126,41 @@ class Game():
         if self.counter < 0.01:
             score_text = self.font.render(
                 str(round(self.counter, 2)), True, '#F40325')
+            shadow_score_text = self.font.render(
+                str(round(self.counter, 2)), True, (0, 0, 0))  # Couleur de l'ombre
         elif self.counter < 3 and self.counter > 0.01:
             score_text = self.font.render(
                 str(round(self.counter, 2)), True, '#F67C07')
+            shadow_score_text = self.font.render(
+                str(round(self.counter, 2)), True, (0, 0, 0))  # Couleur de l'ombre
         else:
             score_text = self.font.render(
-                str(round(self.counter, 2)), True, '#F5D63D')
-            score_text = self.font.render(str(round(self.counter, 2)), True, (245, 214, 61))  # Couleur du texte
+                str(round(self.counter, 2)), True, (245, 214, 61))  # Couleur du texte
 
-            shadow_score_text = self.font.render(str(round(self.counter, 2)), True, (0, 0, 0))  # Couleur de l'ombre
+            shadow_score_text = self.font.render(
+                str(round(self.counter, 2)), True, (0, 0, 0))  # Couleur de l'ombre
 
-            # Obtene les rectangles pour les deux textes
-            score_text_rect = score_text.get_rect()
-            shadow_score_text_rect = shadow_score_text.get_rect()
+        # Obtene les rectangles pour les deux textes
+        score_text_rect = score_text.get_rect()
+        shadow_score_text_rect = shadow_score_text.get_rect()
 
-            # Positionne le texte des secondes et son ombre
-            x = 10  
-            y = 10 
-            score_text_rect.topleft = (x, y)  # Position du texte des secondes
-            shadow_score_text_rect.topleft = (x + 3, y + 3)  # Position de l'ombre (légèrement décalée)
+        # Positionne le texte des secondes et son ombre
+        x = 620
+        y = 10
+        score_text_rect.topleft = (x, y)  # Position du texte des secondes
+        # Position de l'ombre (légèrement décalée)
+        shadow_score_text_rect.topleft = (x + 3, y + 3)
 
-            # Blitte d'abord l'ombre, puis le texte des secondes
-            self.screen.blit(shadow_score_text, shadow_score_text_rect)
-            self.screen.blit(score_text, score_text_rect)
+        # Blitte d'abord l'ombre, puis le texte des secondes
+        self.screen.blit(shadow_score_text, shadow_score_text_rect)
+        self.screen.blit(score_text, score_text_rect)
 
-        self.screen.blit(score_text, (10, 10))
+        # Chargement de l'image "temp.png"
+        self.temp_image = pygame.image.load("./Assets/temp.png")
+        self.temp_image = pygame.transform.scale(self.temp_image, (40, 40))
+        self.screen.blit(self.temp_image, (560, 20))
+
+        #self.screen.blit(score_text, (620, 10))
 
         return ""
 
@@ -220,13 +230,6 @@ class Game():
 
         cinzel_font = pygame.font.Font(
             "Assets/Fonts/static/Cinzel-Regular.ttf", 40)
-        
-        # Chargement de l'image "temp.png"
-        temp_image = pygame.image.load("Assets/temp.png")
-
-        # Position de l'image "temp.png" à gauche
-        temp_rect = temp_image.get_rect()
-        temp_rect.topleft = (10, 10)  # Ajuste les coordonnées selon votre préférence
 
         while True:
             self.screen.blit(background_image, (0, 0))
