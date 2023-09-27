@@ -1,55 +1,59 @@
-<p align="center"><a href="https:/laravel.com" target="_blanc"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg![image](https://github.com/ahmedSOUSSI21/gamejam/assets/75123726/5c042bcd-a103-4335-8a3d-ae78f276d54b)
-" width="400"></a></p>
-<p align="center"> 
-<img alt="GitHub language count" src="https://img.shields.io/github/languages/count/charlesbchv/kmeans">
+<p align="center"><a href="https:/laravel.com" target="_blanc"><img src="[https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Python_logo_and_wordmark.svg/2560px-Python_logo_and_wordmark.svg.png](https://itch.io/jam/gamecodeur-gamejam-34)![image]" width="400"></a></p>
+<p align="center">
+<img alt="GitHub language count" src="https://img.shields.io/github/languages/count/charlesbchv/python">
 <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/charlesbchv/kmeans">
 <img alt="Bower" src="https://img.shields.io/bower/l/space">
 </p>
 
 # GAMEJAM
 
->K-means est une méthode de partitionnement de données et un problème d'optimisation combinatoire. Étant donnés des points et un entier k, le problème est de diviser les points en k groupes, souvent appelés clusters, de façon à minimiser une certaine fonction.
+>
 
 *******
 Table des matières
-1. [K-means avec les 7 clusteurs](#7clusteurs)
-2. [K-means avec 3 clusteurs](#3clusteurs)
-3. [Differentes états de l'Iris](#etats)
-
+1. [Game JAM](#gameJam)
+2. [Installation](#installation)
+3. [Demonstration](#demonstration)
 
 *******
-<div id='7clusteurs'/>  
+<div id='gameJam'/>  
 
-## K-means avec les 7 clusteurs
-![](./ressources/kmeans7clusteurs.png)
+## GameJam : ESIEE Paris  & ESIPE 2023
 
-<div id='3clusteurs'/>  
+Avocat Rush Extreme est un jeu vidéo palpitant conçu en un temps record de 16 heures lors du Game Jam "Tricheurs Créatifs" à l'ESIEE PARIS. Ce jeu unique offre une expérience de jeu intense où les joueurs incarnent un avocat intrépide chargé de franchir rapidement des obstacles pour arriver au tribunal le plus rapidement possible défendre son client.
 
-## K-means avec 3 clusteurs
+### Concept :
 
-![](./ressources/kmeans3clusteurs.png)
+Le joueur est plongé dans la peau d'un avocat audacieux qui doit surmonter des obstacles juridiques en un temps limité en sautant de mur en mur pour atteindre le tribunal. Chaque niveau représente une épreuve où le joueur doit sauter et esquiver habilement pour réussir à passer les obstacles en moins de 10 secondes.
 
-<div id='etats'/>  
+### Caractéristiques Principales :
 
-* Iris Setosa - en bleu
-* Versicolor - en rouge
-* Virginica - en vert
+**Sauts acrobatiques :** Le jeu met en avant des mécaniques de saut et d'esquive pour passer rapidement d'un mur à l'autre. Les joueurs doivent maîtriser ces mouvements pour réussir à franchir les obstacles.
+**Course contre la montre :** Chaque niveau est conçu pour être relevé en moins de 10 secondes, ajoutant une dimension de compétition et d'urgence au jeu.
+**Variété d'obstacles :** Les obstacles juridiques sont représentés sous forme de structures complexes que le joueur doit traverser. Les niveaux deviennent de plus en plus difficiles à mesure que le joueur progresse.
+Graphismes dynamiques : Le jeu est doté de graphismes dynamiques qui captivent le joueur tout en créant un environnement stimulant.
+**IA génératrice de niveaux :** Les niveaux sont générés aléatoirement par une intelligence artificielle, garantissant une expérience de jeu différente à chaque partie.
+Solutions de triche : Pour pimenter le jeu, les joueurs ont accès à trois solutions de triche pour les aider à franchir les obstacles plus rapidement. Ces solutions offrent un avantage stratégique.
+**Défendre son client :** L'objectif ultime est d'arriver au tribunal le plus vite possible pour défendre le client. Les joueurs peuvent mesurer leur succès en fonction du temps écoulé à chaque niveau.
 
-### Differentes états de l'Iris
+<div id='installation'/>  
 
-Afin de tourner et afficher les differentes états de l'iris (en détail), il suffit de modifier legerement le code : 
+## Installation
 
-![img.png](./ressources/img.png)
-
-
-    KMeans.scala
-    --ligne 24 et 25--
-    //pour faire tourner iris il suffit de changer les val par ex tourner (2)
-
-      pointsT.append(tourner(0).toDouble) 
-      pointsT.append(tourner(1).toDouble)
-      i += 1
+### Linux - MacOS
+*lancer la commande : pip install pygame, pip install random, pip install sys, pip install os
 
 
+<div id='demonstration'/>  
+</br>
+<iframe width="560" height="315" src="https://youtu.be/z05wZNzN4gI" frameborder="0" allowfullscreen></iframe>
 
-© Réalisé par **Charles Batchaev**, **Tafa Sakho** **Céryl Valantin**
+Avocat Rush Extreme a été un succès lors du Game Jam "Tricheurs Créatifs", avec des joueurs enthousiastes recherchant l'adrénaline de la course contre la montre tout en explorant les astuces pour progresser rapidement. Le jeu a montré comment des mécaniques de jeu simples peuvent être utilisées de manière créative pour créer une expérience de jeu intense et compétitive.
+
+© Réalisé par
+**Ahmed SOUSSI**
+**Charles Batchaev**
+**Tafa Sakho**
+**Céryl Valantin**
+**Beret**
+
